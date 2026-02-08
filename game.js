@@ -21,7 +21,7 @@
   const HILL_SEGMENT_W = 500;
   const CAR_VERTICAL_SPEED = 3.2;   // unidades por frame (60fps)
   const CAR_VERTICAL_MARGIN = 28;   // margen desde el borde de la carretera
-  const HEART_SPAWN_INTERVAL = 520; // distancia entre corazones
+  const HEART_SPAWN_INTERVAL = 400; // distancia entre corazones
   const HEART_SPAWN_AHEAD = 380;    // distancia por delante al generar (aparecen antes)
   const HEART_COLLISION_X = 58;    // si el corazón entra en esta zona del coche = colisión (muy permisivo)
   const HEART_COLLISION_Y = 34;    // cubre toda la silueta del coche
