@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuestra carretera</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+
+    <!-- Overlay de evento de historia -->
+    <div id="story-overlay" class="overlay hidden" aria-hidden="true">
+      <!-- Celebración final (último evento) -->
+      <div id="story-celebration" class="story-celebration" aria-hidden="true">
+        <span class="story-heart story-heart-main" aria-hidden="true">❤</span>
+        <span class="story-heart story-heart-float story-heart-f1" aria-hidden="true">♥</span>
+        <span class="story-heart story-heart-float story-heart-f2" aria-hidden="true">♥</span>
+        <span class="story-heart story-heart-float story-heart-f3" aria-hidden="true">♥</span>
+        <span class="story-heart story-heart-float story-heart-f4" aria-hidden="true">♥</span>
+        <span class="story-heart story-heart-float story-heart-f5" aria-hidden="true">♥</span>
+      </div>
+      <div id="story-card" class="story-card">
+        <div id="story-media-wrap" class="story-media-wrap hidden">
+          <img id="story-image" src="" alt="" class="story-media-item story-image">
+          <video id="story-video" class="story-media-item story-video" playsinline preload="metadata" loop controls aria-label="Video del momento"></video>
+          <button type="button" id="story-video-play" class="story-video-play hidden" aria-label="Reproducir video">▶</button>
+        </div>
+        <h2 id="story-title" class="story-title"></h2>
+        <p id="story-text" class="story-text"></p>
+        <button type="button" id="story-continue" class="btn-continue">
+          Seguir viajando
+        </button>
+      </div>
+    </div>
+
+    <!-- Popup al recoger un corazón (imagen aleatoria) -->
+    <div id="heart-popup-overlay" class="overlay heart-popup hidden" aria-hidden="true">
+      <div class="heart-popup-card">
+        <img id="heart-popup-image" src="" alt="Recuerdo" class="heart-popup-image">
+        <button type="button" id="heart-popup-close" class="btn-continue heart-popup-close">Seguir viajando</button>
+      </div>
+    </div>
+
+    <!-- Indicador de acelerar (opcional, feedback visual) -->
+    <p id="hint" class="hint"><kbd>Espacio</kbd> acelerar · <kbd>W</kbd>/<kbd>↑</kbd> subir · <kbd>S</kbd>/<kbd>↓</kbd> bajar</p>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

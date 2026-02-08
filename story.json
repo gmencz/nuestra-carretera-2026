@@ -1,0 +1,62 @@
+{
+  "title": "Nuestra carretera",
+  "events": [
+    {
+      "id": "el-comienzo",
+      "distance": 150,
+      "title": "El comienzo",
+      "text": "No sabía que esa decisión iba a cambiar mi vida. Cuando vi tus fotos, me pareciste super lindo y atractivo y pensaba que no me ibas a responder pero aún asi decidí intentarlo",
+      "image": "assets/images/01.jpg"
+    },
+    {
+      "id": "primeras-conversaciones",
+      "distance": 800,
+      "title": "Primeras \"conversaciones\"",
+      "text": "Esto fue lo primero que me sorprendió, nos escribíamos mensajes kilométricos y nunca eramos capaces de hablar directamente porque siempre nos estabamos respondiendo a mensajes anteriores 😭😭😭",
+      "image": "assets/images/02.gif"
+    },
+    {
+      "id": "primer-plan",
+      "distance": 1600,
+      "title": "Primer plan",
+      "text": "Ya que a los dos nos gustan los jueguitos y queríamos hablar de verdad, decidimos jugar por la noche un ratito a un juego de miedo el cual resultó ser una tremenda popotera pero la pasamos bien igualmente y estuvo lindo para romper el hielo",
+      "image": "assets/images/03.jpg"
+    },
+    {
+      "id": "primer-nosotros",
+      "distance": 2400,
+      "title": "Primera vez que nos vimos en persona",
+      "text": "Creo que este día fue de los más nerviosos y bonitos de mi vida, me hizo gracia que estabamos los dos escondiendonos por el centro comercial por miedo a vernos 💀 En cuanto te vi por primera vez casi me explota el corazón de los nervios y no sabia que hacer ni decir pero me pareciste super guapo y no me lo creía, no me acuerdo del todo lo que hicimos que ya sabes que tengo demencia pero sé que fuimos al Vialia y me comprasté a gatito y luego nos fuimos a Castrelos, la verdad que desde este momento ya sabía que eras especial",
+      "image": "assets/images/04.jpg"
+    },
+    {
+      "id": "conociendonos",
+      "distance": 3200,
+      "title": "Conociendonos",
+      "text": "Seguimos quedando y conociendonos mejor, me acuerdo de nuestro primer beso y lío y de las tantas veces que lo hicimos dentro del coche 😳 fuimos a una velocidad increíble, conocí a toda tu familia a la semana literalmente y ya desde el principio eramos inseparables 🥺",
+      "image": "assets/images/05.jpg"
+    },
+    {
+      "id": "sentimiento",
+      "distance": 4000,
+      "title": "Sentimiento 💖",
+      "text": "Y sin darme cuenta, me enamoré, no sé como pero sé que ya no podía estar sin ti y lo que me encanta es que nos vayamos conociendo mejor cada día y que cada vez que te veo me enamoro un poco más, fue muy pronto pero a las dos semanas ya lo hicimos oficial y todo salió genial",
+      "image": "assets/images/06.jpg"
+    },
+    {
+      "id": "nuestras-aventuras",
+      "distance": 4800,
+      "title": "AWANAWA? 🚞",
+      "text": "Desde que nos conocimos hemos hecho muchísimas cosas juntos, incontables quedadas en casita, días de playa, noches de gorditos golosos, muchos mimitos y amor lo cual nunca nos faltará y muchas aventuras como nuestro viaje a Portugal, el parque acuático, el Kayak, la ruta por el santuario del Elden Ring en el cual casi nos morimos, los conciertos en Castrelos, nuestros viajecitos en coche, las visitas a las Termas y muchisimas más cosas que no puedo mencionar todas pero que han sido increíbles y que me han hecho sentir muy feliz y contento de tenerte a mi lado.",
+      "image": "assets/images/07.gif"
+    },
+    {
+      "id": "presente",
+      "distance": 5600,
+      "title": "Presente y futuro 💑",
+      "text": "Estos 8 meses han sido los mejores meses de mi vida, he aprendido muchísimo de ti y de nosotros y sé que podemos hacer cosas increíbles juntos, hemos afrontado algunos bachecitos como la falta de tiempo y la distancia pero siempre lo hablamos todo y salimos adelante, esto acaba de empezar y tenemos muchísimas cosas por hacer y por vivir juntos, nunca nadie me ha hecho sentir así y lo que tengo claro es que voy a darlo todo por nosotros, gracias por amarme y ser el mejor, tengo muchas más cosas que decirte pero es que mis sentimientos por ti son interminables, te amo mucho y feliz San Valentín mi amor, por una eternidad juntos y felices 💖",
+      "image": null,
+      "video": "assets/videos/08.mp4"
+    }
+  ]
+}
