@@ -21,7 +21,7 @@
   const HILL_SEGMENT_W = 500;
   const CAR_VERTICAL_SPEED = 3.2;   // unidades por frame (60fps)
   const CAR_VERTICAL_MARGIN = 28;   // margen desde el borde de la carretera
-  const HEART_SPAWN_INTERVAL = 400; // distancia entre corazones
+  const HEART_SPAWN_INTERVAL = 820; // distancia entre corazones (más separados = historia más pausada)
   const HEART_SPAWN_AHEAD = 380;    // distancia por delante al generar (aparecen antes)
   const HEART_COLLISION_X = 58;    // si el corazón entra en esta zona del coche = colisión (muy permisivo)
   const HEART_COLLISION_Y = 34;    // cubre toda la silueta del coche
@@ -58,6 +58,8 @@
     hearts: [],              // { distance, offsetY } en la carretera
     lastHeartSpawnDistance: -HEART_SPAWN_AHEAD, // primer corazón visible desde el inicio, un poco por delante
     heartPopupVisible: false,
+    started: false,           // true cuando el usuario pulsa "Empezar viaje"
+    heartImageIndex: 0,        // siguiente imagen de corazón (en orden, no aleatorio)
   };
 
   // ========== DOM ==========
@@ -75,6 +77,8 @@
     heartOverlay: null,
     heartPopupImage: null,
     heartPopupClose: null,
+    welcomeOverlay: null,
+    welcomeStartBtn: null,
   };
 
   const AUTOPLAY_DELAY_MS = 2000;
@@ -100,7 +104,10 @@
     dom.heartOverlay = document.getElementById('heart-popup-overlay');
     dom.heartPopupImage = document.getElementById('heart-popup-image');
     dom.heartPopupClose = document.getElementById('heart-popup-close');
+    dom.welcomeOverlay = document.getElementById('welcome-overlay');
+    dom.welcomeStartBtn = document.getElementById('welcome-start-btn');
 
+    if (dom.welcomeStartBtn) dom.welcomeStartBtn.addEventListener('click', onWelcomeStart);
     if (dom.heartPopupClose) dom.heartPopupClose.addEventListener('click', onHeartPopupClose);
     if (dom.videoPlayBtn) dom.videoPlayBtn.addEventListener('click', onVideoPlayClick);
     if (dom.video) {
@@ -117,9 +124,16 @@
     if (dom.btnContinue) dom.btnContinue.addEventListener('click', onContinue);
 
     loadStory().then(() => {
-      sortEvents();
-      gameLoop();
+      // Orden de eventos = orden en story.json (1.º corazón → 1.º evento, etc.)
+      resize();
+      render(); // un frame estático para que se vea la carretera detrás
     }).catch(console.error);
+  }
+
+  function onWelcomeStart() {
+    state.started = true;
+    if (dom.welcomeOverlay) dom.welcomeOverlay.classList.add('hidden');
+    gameLoop();
   }
 
   function resize() {
@@ -300,7 +314,7 @@
   // ========== UPDATE ==========
 
   function update(dt) {
-    if (state.paused) return;
+    if (!state.started || state.paused) return;
 
     const speed = state.accelerating ? BOOST_SPEED : BASE_SPEED;
     state.speed = speed;
@@ -313,12 +327,6 @@
     if (state.moveUp) state.carOffsetY -= CAR_VERTICAL_SPEED * (dt / 16);
     if (state.moveDown) state.carOffsetY += CAR_VERTICAL_SPEED * (dt / 16);
     state.carOffsetY = Math.max(-maxOffset, Math.min(maxOffset, state.carOffsetY));
-
-    const next = getNextEvent();
-    if (next && state.distance >= next.distance) {
-      triggerEvent(next);
-      return;
-    }
 
     // Corazones: generar, eliminar los pasados y comprobar colisión
     while (state.distance - state.lastHeartSpawnDistance >= HEART_SPAWN_INTERVAL) {
@@ -339,10 +347,17 @@
       const hy = roadTop + roadHeight / 2 + h.offsetY;
       if (Math.abs(hx - carX) < HEART_COLLISION_X && Math.abs(hy - carY) < HEART_COLLISION_Y) {
         state.hearts.splice(i, 1);
-        if (HEART_IMAGES.length > 0) {
+        const next = getNextEvent();
+        if (next) {
+          // Todavía hay eventos de historia: mostrar el siguiente (1.º corazón → 1.º evento, etc.)
+          triggerEvent(next);
+        } else if (HEART_IMAGES.length > 0) {
+          // Historia completada: primero fotos en orden, luego aleatorias para siempre
           state.paused = true;
           state.heartPopupVisible = true;
-          const src = HEART_IMAGES[Math.floor(Math.random() * HEART_IMAGES.length)];
+          const src = state.heartImageIndex < HEART_IMAGES.length
+            ? HEART_IMAGES[state.heartImageIndex++]
+            : HEART_IMAGES[Math.floor(Math.random() * HEART_IMAGES.length)];
           if (dom.heartPopupImage) dom.heartPopupImage.src = src;
           if (dom.heartOverlay) {
             dom.heartOverlay.classList.remove('hidden');
@@ -353,6 +368,7 @@
         break;
       }
     }
+
   }
 
   // ========== RENDER (separación clara) ==========
@@ -385,7 +401,7 @@
     // 6.5 Corazones en la carretera
     drawHearts(ctx, width, height, roadTop, roadHeight);
 
-    // 7. Coche (vista lateral, fijo en X)
+    // 7. Coche (vista lateral; si está volando, animación de despegue)
     drawCar(ctx, width, height, roadTop, roadHeight);
   }
 
@@ -639,6 +655,10 @@
     ctx.fill();
     ctx.stroke();
 
+    // 4.5 Dos gatos conduciendo (conductor y pasajero)
+    drawCatInCar(ctx, -14, -5, 5, '#e8a838');
+    drawCatInCar(ctx, 6, -5, 5, '#c4a574');
+
     // 5. Ruedas (grandes, deportivas)
     const wheelY = 14;
     const wheelR = 12;
@@ -686,6 +706,55 @@
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
+
+    ctx.restore();
+  }
+
+  function drawCatInCar(ctx, x, y, size, furColor) {
+    ctx.save();
+    ctx.translate(x, y);
+    const s = size;
+    ctx.strokeStyle = '#5a4a3a';
+    ctx.lineWidth = 1;
+
+    // Cabeza
+    ctx.fillStyle = furColor;
+    ctx.beginPath();
+    ctx.arc(0, 0, s * 1.1, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Orejas
+    ctx.fillStyle = furColor;
+    ctx.beginPath();
+    ctx.moveTo(-s * 0.7, -s * 0.9);
+    ctx.lineTo(-s * 0.3, -s * 1.4);
+    ctx.lineTo(0, -s * 0.9);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(s * 0.3, -s * 0.9);
+    ctx.lineTo(s * 0.7, -s * 1.4);
+    ctx.lineTo(s * 0.1, -s * 0.9);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Ojos
+    ctx.fillStyle = '#2d3748';
+    ctx.beginPath();
+    ctx.ellipse(-s * 0.35, -s * 0.15, s * 0.2, s * 0.28, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.ellipse(s * 0.35, -s * 0.15, s * 0.2, s * 0.28, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Nariz
+    ctx.fillStyle = '#ff9ebb';
+    ctx.beginPath();
+    ctx.ellipse(0, s * 0.2, s * 0.15, s * 0.12, 0, 0, Math.PI * 2);
+    ctx.fill();
 
     ctx.restore();
   }

@@ -14,6 +14,15 @@
   <div id="game-container">
     <canvas id="game-canvas"></canvas>
 
+    <!-- Pantalla de bienvenida -->
+    <div id="welcome-overlay" class="welcome-overlay" aria-hidden="false">
+      <div class="welcome-card">
+        <h1 class="welcome-title">Nuestra carretera</h1>
+        <p class="welcome-text">Un viaje por nuestra historia. Conduce, recoge corazones y descubre cada momento.</p>
+        <button type="button" id="welcome-start-btn" class="btn-continue welcome-start-btn">Empezar viaje</button>
+      </div>
+    </div>
+
     <!-- Overlay de evento de historia -->
     <div id="story-overlay" class="overlay hidden" aria-hidden="true">
       <!-- Celebración final (último evento) -->
@@ -39,7 +48,7 @@
       </div>
     </div>
 
-    <!-- Popup al recoger un corazón (imagen aleatoria) -->
+    <!-- Popup al recoger un corazón (imagen en orden) -->
     <div id="heart-popup-overlay" class="overlay heart-popup hidden" aria-hidden="true">
       <div class="heart-popup-card">
         <img id="heart-popup-image" src="" alt="Recuerdo" class="heart-popup-image">
